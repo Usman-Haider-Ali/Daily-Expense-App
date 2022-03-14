@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:personal_expenses/models/expense_model.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +18,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyHomePageState();
+  }
+}
+
+class MyHomePageState extends State<MyHomePage> {
   List<ExpenseModel> expensesList = [
     ExpenseModel(
       id: '123',
@@ -59,6 +70,21 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
   ];
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
+  void _addExpenses() {
+    setState(() {
+      expensesList.add(ExpenseModel(
+        id: '963',
+        amount: double.parse(amountController.text),
+        title: titleController.text,
+        date: DateTime.now(),
+      ));
+      titleController.clear();
+      amountController.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,50 +112,119 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: expensesList.map((expense) {
-                  return Card(
-                      child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Card(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          expense.title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                        TextField(
+                          decoration: InputDecoration(
+                            label: Text('Title'),
+                            // border: OutlineInputBorder(),
+                            hintText: 'Enter Title',
                           ),
+                          controller: titleController,
                         ),
                         SizedBox(
-                          height: 4,
+                          height: 8,
                         ),
-                        Text(
-                          expense.amount.toString() + ' \$',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
+                        TextField(
+                          decoration: InputDecoration(
+                            label: Text('Amount'),
+                            // border: OutlineInputBorder(),
+                            hintText: 'Enter Amount',
                           ),
+                          controller: amountController,
                         ),
                         SizedBox(
-                          height: 4,
+                          height: 8,
                         ),
-                        Text(
-                          expense.date.toString(),
-                          style: TextStyle(
-                            fontSize: 14,
+                        OutlinedButton(
+                          onPressed: () {
+                            _addExpenses();
+                            print(titleController.text);
+                            print(amountController.text);
+                          },
+                          child: Text('Add Expense'),
+                        ),
+                      ]),
+                ),
+              ),
+              (expensesList.length > 0)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: expensesList.map((expense) {
+                        return Card(
+                            child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Colors.blue,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Text(
+                                  '${expense.amount}\$',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      expense.title,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat.yMMMd().format(expense.date),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
                           ),
+                        ));
+                      }).toList(),
+                    )
+                  : Container(
+                      margin: EdgeInsets.only(top: 32),
+                      child: Text(
+                        'Add and Manage Your Daily Life Expenses',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
-                      ],
+                      ),
                     ),
-                  ));
-                }).toList(),
-              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
