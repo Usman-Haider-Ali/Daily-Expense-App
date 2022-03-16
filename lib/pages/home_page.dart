@@ -79,11 +79,37 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ExpensesGraph(),
+              ExpensesGraph(_expensesList),
               SizedBox(
                 height: 4,
               ),
-              ExpensesList(_expensesList),
+              (_expensesList.isEmpty)
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: 32,
+                        ),
+                        Container(
+                          height: 150,
+                          width: 150,
+                          child: Image.asset(
+                            'assets/images/empty_list.png',
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          'No Expenses Found',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    )
+                  : ExpensesList(_expensesList),
             ],
           ),
         ),

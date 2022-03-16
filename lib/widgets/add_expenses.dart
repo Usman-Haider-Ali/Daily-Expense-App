@@ -76,6 +76,7 @@ class _AddExpensesState extends State<AddExpenses> {
             child: Text(
               'Add Expense',
               style: TextStyle(
+                fontSize: 18,
                 color: Theme.of(context).primaryColor,
               ),
             ),

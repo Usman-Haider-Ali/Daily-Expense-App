@@ -9,9 +9,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
         brightness: Brightness.light,
+        fontFamily: 'Fredoka',
+        appBarTheme: AppBarTheme(
+            // titleTextStyle: TextStyle(
+            // fontFamily: 'Lato',
+            // fontSize: 20,
+            // ),
+            ),
       ),
       home: HomePage(),
     );
