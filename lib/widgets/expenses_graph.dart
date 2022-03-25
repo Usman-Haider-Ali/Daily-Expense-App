@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '/models/expense_model.dart';
+import '../widgets/chart_bar.dart';
 
 class ExpensesGraph extends StatelessWidget {
   final List<ExpenseModel> _recentExpensesList;
@@ -11,8 +12,7 @@ class ExpensesGraph extends StatelessWidget {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
-
-      var totalSum;
+      double totalSum = 0.0;
       for (var i = 0; i < _recentExpensesList.length; i++) {
         if (_recentExpensesList[i].date.day == weekDay.day &&
             _recentExpensesList[i].date.month == weekDay.month &&
@@ -20,7 +20,16 @@ class ExpensesGraph extends StatelessWidget {
           totalSum += _recentExpensesList[i].amount;
         }
       }
-      return {'day': DateFormat.E(weekDay), 'amount': totalSum};
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'amount': totalSum.toStringAsFixed(0),
+      };
+    });
+  }
+
+  double get maxSpending {
+    return groupedExpensesValues.fold(0.0, (previousValue, element) {
+      return previousValue + double.parse(element['amount'].toString());
     });
   }
 
@@ -30,7 +39,19 @@ class ExpensesGraph extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Row(
-          children: [],
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedExpensesValues.map((data) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                data['day'].toString(),
+                double.parse(data['amount'].toString()),
+                maxSpending == 0
+                    ? 0.0
+                    : double.parse(data['amount'].toString()) / maxSpending,
+              ),
+            );
+          }).toList(),
         ),
       ),
     );

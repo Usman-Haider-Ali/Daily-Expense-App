@@ -15,26 +15,38 @@ class _HomePageState extends State<HomePage> {
     ExpenseModel(
       id: '123',
       title: 'Books',
-      amount: 56.52,
-      date: DateTime.now(),
+      amount: 50.52,
+      date: DateTime.now().subtract(Duration(days: 1)),
     ),
     ExpenseModel(
       id: '789',
       title: 'Shirts',
-      amount: 26.20,
-      date: DateTime.now(),
+      amount: 35.20,
+      date: DateTime.now().subtract(Duration(days: 2)),
     ),
     ExpenseModel(
       id: '987',
       title: 'Bag',
-      amount: 30.14,
-      date: DateTime.now(),
+      amount: 40.14,
+      date: DateTime.now().subtract(Duration(days: 3)),
     ),
     ExpenseModel(
       id: '852',
       title: 'Bottle',
-      amount: 22.25,
-      date: DateTime.now(),
+      amount: 55.25,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    ExpenseModel(
+      id: '894',
+      title: 'Keyboard',
+      amount: 50.25,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    ExpenseModel(
+      id: '145',
+      title: 'Mouse',
+      amount: 60.25,
+      date: DateTime.now().subtract(Duration(days: 6)),
     ),
   ];
 
@@ -59,6 +71,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  List<ExpenseModel> get _recentExpenses {
+    return _expensesList.where((exp) {
+      return exp.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +101,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ExpensesGraph(_expensesList),
+              ExpensesGraph(_recentExpenses),
               SizedBox(
                 height: 4,
               ),
