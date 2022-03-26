@@ -1,30 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddExpenses extends StatefulWidget {
-  final Function newExpHandler;
+  final Function _newExpHandler;
 
-  AddExpenses(this.newExpHandler);
+  AddExpenses(this._newExpHandler);
 
   @override
   State<AddExpenses> createState() => _AddExpensesState();
 }
 
 class _AddExpensesState extends State<AddExpenses> {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  var _selectedDate;
   void _addNewExp() {
-    String title = titleController.text;
-    if (amountController.text.isEmpty) {
+    String title = _titleController.text;
+    if (_amountController.text.isEmpty) {
       return;
     }
-    double amount = double.parse(amountController.text);
-    if (title.isEmpty || amount.isNegative || amount.toString().isEmpty) {
+    double amount = double.parse(_amountController.text);
+    if (title.isEmpty ||
+        amount.isNegative ||
+        amount.toString().isEmpty ||
+        _selectedDate == null) {
       return;
     }
-    widget.newExpHandler(
-        titleController.text, double.parse(amountController.text));
+    widget._newExpHandler(
+        _titleController.text, double.parse(_amountController.text),_selectedDate);
     Navigator.of(context).pop();
+  }
+
+  void _selectDate() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = value;
+      });
+    });
   }
 
   @override
@@ -51,7 +71,7 @@ class _AddExpensesState extends State<AddExpenses> {
               hintText: 'Enter Title',
             ),
             onSubmitted: (_) => _addNewExp(),
-            controller: titleController,
+            controller: _titleController,
           ),
           SizedBox(
             height: 16,
@@ -63,21 +83,49 @@ class _AddExpensesState extends State<AddExpenses> {
               hintText: 'Enter Amount',
             ),
             onSubmitted: (_) => _addNewExp(),
-            controller: amountController,
+            controller: _amountController,
             keyboardType: TextInputType.numberWithOptions(
               decimal: true,
             ),
           ),
           SizedBox(
-            height: 4,
+            height: 8,
           ),
-          OutlinedButton(
+          Container(
+            margin: EdgeInsets.only(
+              left: 4,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  _selectedDate == null
+                      ? 'No Date Chosen'
+                      : 'Selected Date:  ${DateFormat.yMMMMd().format(_selectedDate)}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: _selectDate,
+                    child: Text(
+                      'Select Date',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          ElevatedButton(
             onPressed: () => _addNewExp(),
             child: Text(
               'Add Expense',
               style: TextStyle(
                 fontSize: 18,
-                color: Theme.of(context).primaryColor,
               ),
             ),
           ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
-  final String label;
-  final double spendingAmount;
-  final double spendingPctOfTotal;
+  final String _label;
+  final double _spendingAmount;
+  final double _spendingPctOfTotal;
 
-  ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
+  ChartBar(this._label, this._spendingAmount, this._spendingPctOfTotal);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ChartBar extends StatelessWidget {
       children: [
         FittedBox(
           child: Text(
-            '\$${spendingAmount.toString()}',
+            '\$${_spendingAmount.toString()}',
             style: TextStyle(
               fontWeight: FontWeight.w500,
             ),
@@ -28,22 +28,22 @@ class ChartBar extends StatelessWidget {
           child: Stack(children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1.0,
-                ),
+                // border: Border.all(
+                //   color: Colors.grey,
+                //   width: 1.0,
+                // ),
                 color: Colors.grey,
-                borderRadius: BorderRadius.circular(8),
+                // borderRadius: BorderRadius.circular(8),
               ),
             ),
             FractionallySizedBox(
-              heightFactor: spendingPctOfTotal,
+              heightFactor: _spendingPctOfTotal,
               child: Container(
                 width: 15,
                 height: 70,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(8),
+                  // borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
@@ -53,7 +53,7 @@ class ChartBar extends StatelessWidget {
           height: 4,
         ),
         Text(
-          label,
+          _label,
           style: TextStyle(
             fontWeight: FontWeight.w500,
           ),

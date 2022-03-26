@@ -7,7 +7,7 @@ class ExpensesGraph extends StatelessWidget {
   final List<ExpenseModel> _recentExpensesList;
   ExpensesGraph(this._recentExpensesList);
 
-  List<Map<String, Object>> get groupedExpensesValues {
+  List<Map<String, Object>> get _groupedExpensesValues {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
@@ -27,8 +27,8 @@ class ExpensesGraph extends StatelessWidget {
     });
   }
 
-  double get maxSpending {
-    return groupedExpensesValues.fold(0.0, (previousValue, element) {
+  double get _maxSpending {
+    return _groupedExpensesValues.fold(0.0, (previousValue, element) {
       return previousValue + double.parse(element['amount'].toString());
     });
   }
@@ -40,15 +40,15 @@ class ExpensesGraph extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedExpensesValues.map((data) {
+          children: _groupedExpensesValues.map((data) {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
                 data['day'].toString(),
                 double.parse(data['amount'].toString()),
-                maxSpending == 0
+                _maxSpending == 0
                     ? 0.0
-                    : double.parse(data['amount'].toString()) / maxSpending,
+                    : double.parse(data['amount'].toString()) / _maxSpending,
               ),
             );
           }).toList(),

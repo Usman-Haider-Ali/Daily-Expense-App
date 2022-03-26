@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
             // fontSize: 20,
             // ),
             ),
+        errorColor: Colors.red,
       ),
       home: HomePage(),
     );

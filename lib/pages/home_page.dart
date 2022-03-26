@@ -19,28 +19,10 @@ class _HomePageState extends State<HomePage> {
       date: DateTime.now().subtract(Duration(days: 1)),
     ),
     ExpenseModel(
-      id: '789',
-      title: 'Shirts',
-      amount: 35.20,
-      date: DateTime.now().subtract(Duration(days: 2)),
-    ),
-    ExpenseModel(
-      id: '987',
-      title: 'Bag',
-      amount: 40.14,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    ExpenseModel(
       id: '852',
       title: 'Bottle',
-      amount: 55.25,
+      amount: 10.25,
       date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    ExpenseModel(
-      id: '894',
-      title: 'Keyboard',
-      amount: 50.25,
-      date: DateTime.now().subtract(Duration(days: 5)),
     ),
     ExpenseModel(
       id: '145',
@@ -49,6 +31,14 @@ class _HomePageState extends State<HomePage> {
       date: DateTime.now().subtract(Duration(days: 6)),
     ),
   ];
+
+  void _deleteExp(String expID) {
+    setState(() {
+      _expensesList.removeWhere(
+        (element) => element.id == expID,
+      );
+    });
+  }
 
   void _startAddNewExpense(BuildContext context) {
     showModalBottomSheet(
@@ -59,12 +49,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _addNewExpense(String title, double amount) {
+  void _addNewExpense(String title, double amount, DateTime selectedDate) {
     final newExp = ExpenseModel(
-        id: DateTime.now().toString(),
-        title: title,
-        amount: amount,
-        date: DateTime.now());
+      id: DateTime.now().toString(),
+      title: title,
+      amount: amount,
+      date: selectedDate,
+    );
 
     setState(() {
       _expensesList.add(newExp);
@@ -92,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(
               Icons.add,
             ),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -131,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     )
-                  : ExpensesList(_expensesList),
+                  : ExpensesList(_expensesList, _deleteExp),
             ],
           ),
         ),
