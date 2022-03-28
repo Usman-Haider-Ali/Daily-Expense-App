@@ -26,8 +26,8 @@ class _AddExpensesState extends State<AddExpenses> {
         _selectedDate == null) {
       return;
     }
-    widget._newExpHandler(
-        _titleController.text, double.parse(_amountController.text),_selectedDate);
+    widget._newExpHandler(_titleController.text,
+        double.parse(_amountController.text), _selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -49,87 +49,89 @@ class _AddExpensesState extends State<AddExpenses> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Text(
-            'Expense Details',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Title'),
-              border: OutlineInputBorder(),
-              hintText: 'Enter Title',
-            ),
-            onSubmitted: (_) => _addNewExp(),
-            controller: _titleController,
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              label: Text('Amount'),
-              border: OutlineInputBorder(),
-              hintText: 'Enter Amount',
-            ),
-            onSubmitted: (_) => _addNewExp(),
-            controller: _amountController,
-            keyboardType: TextInputType.numberWithOptions(
-              decimal: true,
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Container(
-            margin: EdgeInsets.only(
-              left: 4,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  _selectedDate == null
-                      ? 'No Date Chosen'
-                      : 'Selected Date:  ${DateFormat.yMMMMd().format(_selectedDate)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: _selectDate,
-                    child: Text(
-                      'Select Date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () => _addNewExp(),
-            child: Text(
-              'Add Expense',
+    return SingleChildScrollView(
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(
+              'Expense Details',
               style: TextStyle(
                 fontSize: 18,
+                fontWeight: FontWeight.w500,
               ),
             ),
-          ),
-        ]),
+            SizedBox(
+              height: 16,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Title'),
+                border: OutlineInputBorder(),
+                hintText: 'Enter Title',
+              ),
+              onSubmitted: (_) => _addNewExp(),
+              controller: _titleController,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                label: Text('Amount'),
+                border: OutlineInputBorder(),
+                hintText: 'Enter Amount',
+              ),
+              onSubmitted: (_) => _addNewExp(),
+              controller: _amountController,
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: 4,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    _selectedDate == null
+                        ? 'No Date Chosen'
+                        : 'Selected Date:  ${DateFormat.yMMMMd().format(_selectedDate)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: _selectDate,
+                      child: Text(
+                        'Select Date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () => _addNewExp(),
+              child: Text(
+                'Add Expense',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

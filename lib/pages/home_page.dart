@@ -30,6 +30,60 @@ class _HomePageState extends State<HomePage> {
       amount: 60.25,
       date: DateTime.now().subtract(Duration(days: 6)),
     ),
+    ExpenseModel(
+      id: '123',
+      title: 'Books',
+      amount: 50.52,
+      date: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    ExpenseModel(
+      id: '852',
+      title: 'Bottle',
+      amount: 10.25,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    ExpenseModel(
+      id: '145',
+      title: 'Mouse',
+      amount: 60.25,
+      date: DateTime.now().subtract(Duration(days: 6)),
+    ),
+    ExpenseModel(
+      id: '123',
+      title: 'Books',
+      amount: 50.52,
+      date: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    ExpenseModel(
+      id: '852',
+      title: 'Bottle',
+      amount: 10.25,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    ExpenseModel(
+      id: '145',
+      title: 'Mouse',
+      amount: 60.25,
+      date: DateTime.now().subtract(Duration(days: 6)),
+    ),
+    ExpenseModel(
+      id: '123',
+      title: 'Books',
+      amount: 50.52,
+      date: DateTime.now().subtract(Duration(days: 1)),
+    ),
+    ExpenseModel(
+      id: '852',
+      title: 'Bottle',
+      amount: 10.25,
+      date: DateTime.now().subtract(Duration(days: 4)),
+    ),
+    ExpenseModel(
+      id: '145',
+      title: 'Mouse',
+      amount: 60.25,
+      date: DateTime.now().subtract(Duration(days: 6)),
+    ),
   ];
 
   void _deleteExp(String expID) {
@@ -92,7 +146,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ExpensesGraph(_recentExpenses),
+              Container(
+                // height: MediaQuery.of(context).size.height * 0.8,
+                child: ExpensesGraph(_recentExpenses),
+              ),
               SizedBox(
                 height: 4,
               ),

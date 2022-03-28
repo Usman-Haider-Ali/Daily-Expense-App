@@ -24,7 +24,8 @@ class ChartBar extends StatelessWidget {
         ),
         Container(
           width: 15,
-          height: 70,
+          height: 75,
+          // height: 150,
           child: Stack(children: [
             Container(
               decoration: BoxDecoration(
@@ -40,7 +41,7 @@ class ChartBar extends StatelessWidget {
               heightFactor: _spendingPctOfTotal,
               child: Container(
                 width: 15,
-                height: 70,
+                // height: 70,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   // borderRadius: BorderRadius.circular(8),
